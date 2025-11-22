@@ -2,11 +2,10 @@
 export type GameView = 'WELCOME' | 'CREATE_CHARACTER' | 'GAME_LOOP' | 'SAVES';
 
 export enum AttributeGrade {
-  MORTAL = '凡品',
-  SPIRIT = '灵品',
-  EARTH = '地品',
-  HEAVEN = '天品',
-  DIVINE = '神品',
+  MORTAL = '凡级',
+  SPIRIT = '灵级',
+  EARTH = '地级',
+  HEAVEN = '天级',
 }
 
 export interface AttributeRoll {

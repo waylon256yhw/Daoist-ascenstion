@@ -132,6 +132,84 @@
       .mask-image-gradient {
         mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
       }
+
+      /* Page Transition */
+      .page-transition-enter {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+      }
+      .page-transition-active {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+      }
+      .page-transition-exit {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.98);
+        transition: opacity 0.3s ease-in, transform 0.3s ease-in;
+      }
+
+      /* Dice Roll Animation */
+      @keyframes diceShake {
+        0%, 100% { transform: rotate(0deg) scale(1); }
+        10% { transform: rotate(-15deg) scale(1.1); }
+        20% { transform: rotate(15deg) scale(1.15); }
+        30% { transform: rotate(-10deg) scale(1.1); }
+        40% { transform: rotate(10deg) scale(1.05); }
+        50% { transform: rotate(-5deg) scale(1.1); }
+        60% { transform: rotate(5deg) scale(1.05); }
+        70% { transform: rotate(-3deg) scale(1.02); }
+        80% { transform: rotate(3deg) scale(1.01); }
+        90% { transform: rotate(-1deg) scale(1); }
+      }
+      @keyframes cardReveal {
+        0% {
+          opacity: 0;
+          transform: rotateY(90deg) scale(0.8);
+          filter: blur(10px);
+        }
+        50% {
+          opacity: 0.5;
+          filter: blur(5px);
+        }
+        100% {
+          opacity: 1;
+          transform: rotateY(0deg) scale(1);
+          filter: blur(0);
+        }
+      }
+      @keyframes glowPulse {
+        0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
+        50% { box-shadow: 0 0 40px rgba(16, 185, 129, 0.6), 0 0 60px rgba(245, 158, 11, 0.3); }
+      }
+      .dice-shaking {
+        animation: diceShake 0.8s ease-in-out;
+      }
+      .card-revealing {
+        animation: cardReveal 0.6s ease-out forwards;
+      }
+      .glow-pulse {
+        animation: glowPulse 1.5s ease-in-out infinite;
+      }
+
+      /* Enhanced Button Interactions */
+      .btn-tactile:active {
+        transform: scale(0.95);
+        filter: brightness(0.9);
+      }
+      .input-ink:focus {
+        transform: translateY(-2px);
+      }
+
+      /* Card Hover 3D Effect */
+      .card-3d {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        transform-style: preserve-3d;
+      }
+      .card-3d:hover {
+        transform: translateY(-4px) rotateX(2deg);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      }
     </style>
   <script type="importmap">
 {

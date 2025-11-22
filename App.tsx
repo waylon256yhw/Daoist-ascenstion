@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { GameView, Character, ChatMessage, SaveFile } from './types';
 import { WelcomeScreen } from './components/WelcomeScreen';
 import { CharacterCreation } from './components/CharacterCreation';
@@ -9,74 +9,99 @@ const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<GameView>('WELCOME');
   const [character, setCharacter] = useState<Character | null>(null);
   const [messageHistory, setMessageHistory] = useState<ChatMessage[]>([]);
-  
+
+  // Page transition state
+  const [transitionState, setTransitionState] = useState<'enter' | 'active' | 'exit'>('active');
+  const [pendingView, setPendingView] = useState<GameView | null>(null);
+
+  // Smooth view transition handler
+  const transitionToView = (newView: GameView) => {
+    if (newView === currentView) return;
+    setTransitionState('exit');
+    setPendingView(newView);
+  };
+
+  // Handle transition completion
+  useEffect(() => {
+    if (transitionState === 'exit' && pendingView) {
+      const timer = setTimeout(() => {
+        setCurrentView(pendingView);
+        setPendingView(null);
+        setTransitionState('enter');
+        // Trigger active state after enter
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            setTransitionState('active');
+          });
+        });
+      }, 300); // Match exit transition duration
+      return () => clearTimeout(timer);
+    }
+  }, [transitionState, pendingView]);
+
   // Handlers
   const handleStartNewGame = () => {
-    setCurrentView('CREATE_CHARACTER');
+    transitionToView('CREATE_CHARACTER');
   };
 
   const handleCharacterCreated = (newChar: Character) => {
     setCharacter(newChar);
-    setCurrentView('GAME_LOOP');
+    transitionToView('GAME_LOOP');
   };
 
   const handleLoadGameClick = () => {
-    // If we are at the Welcome screen, we should ensure no character state exists
-    // so SaveLoadScreen opens in 'LOAD' mode.
     if (currentView === 'WELCOME') {
         setCharacter(null);
     }
-    setCurrentView('SAVES');
+    transitionToView('SAVES');
   };
 
   const handleLoadFile = (file: SaveFile) => {
       setCharacter(file.character);
       setMessageHistory(file.messages);
-      setCurrentView('GAME_LOOP');
+      transitionToView('GAME_LOOP');
   };
 
   const handleSaveGame = (char: Character, messages: ChatMessage[]) => {
       setCharacter(char);
       setMessageHistory(messages);
-      setCurrentView('SAVES');
+      transitionToView('SAVES');
   };
 
   const handleExitGame = () => {
-      // CLEAR STATE when exiting to Welcome Screen
-      // This prevents the "Back" button in Save/Load screen from trying to return to a closed game
       setCharacter(null);
       setMessageHistory([]);
-      setCurrentView('WELCOME');
+      transitionToView('WELCOME');
   };
 
   const renderView = () => {
     switch (currentView) {
       case 'WELCOME':
         return <WelcomeScreen onStart={handleStartNewGame} onLoad={handleLoadGameClick} />;
-      
+
       case 'CREATE_CHARACTER':
         return (
-          <CharacterCreation 
-            onComplete={handleCharacterCreated} 
-            onBack={() => setCurrentView('WELCOME')} 
+          <CharacterCreation
+            onComplete={handleCharacterCreated}
+            onBack={() => transitionToView('WELCOME')}
           />
         );
-      
+
       case 'GAME_LOOP':
         if (!character) return <WelcomeScreen onStart={handleStartNewGame} onLoad={handleLoadGameClick} />;
         return (
-          <GameInterface 
+          <GameInterface
             character={character}
             onSave={(char, msgs) => handleSaveGame(char, msgs)}
             onExit={handleExitGame}
           />
         );
-      
+
       case 'SAVES':
         return (
-            <SaveLoadScreen 
-                mode={character ? 'SAVE' : 'LOAD'} 
-                onBack={() => character ? setCurrentView('GAME_LOOP') : setCurrentView('WELCOME')}
+            <SaveLoadScreen
+                mode={character ? 'SAVE' : 'LOAD'}
+                onBack={() => character ? transitionToView('GAME_LOOP') : transitionToView('WELCOME')}
                 onLoadFile={handleLoadFile}
                 currentSaveData={character ? { character, messages: messageHistory, summary: '' } : undefined}
             />
@@ -84,6 +109,16 @@ const App: React.FC = () => {
 
       default:
         return <div>Unknown State</div>;
+    }
+  };
+
+  // Get transition class based on state
+  const getTransitionClass = () => {
+    switch (transitionState) {
+      case 'enter': return 'page-transition-enter';
+      case 'active': return 'page-transition-active';
+      case 'exit': return 'page-transition-exit';
+      default: return 'page-transition-active';
     }
   };
 
@@ -100,8 +135,8 @@ const App: React.FC = () => {
         {/* Background Layer 3: Paper Texture Blend */}
         <div className="fixed inset-0 z-0 bg-paper-texture opacity-20 pointer-events-none mix-blend-overlay"></div>
         
-        {/* Content Layer */}
-        <div className="relative z-10 w-full h-full flex flex-col">
+        {/* Content Layer with Page Transition */}
+        <div className={`relative z-10 w-full h-full flex flex-col ${getTransitionClass()}`}>
             {renderView()}
         </div>
     </div>

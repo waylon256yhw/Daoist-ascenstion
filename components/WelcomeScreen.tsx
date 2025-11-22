@@ -72,7 +72,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart, onLoad })
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-8 w-full max-w-lg px-4 pt-6">
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 w-full max-w-lg px-4 pt-4">
           <Button onClick={onStart} className="flex-1 h-16 text-xl group border-jade-500/50 hover:border-jade-400 bg-slate-900 hover:bg-jade-950 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
             <PlayCircle className="w-6 h-6 text-jade-400 group-hover:text-white transition-colors" />
             <span>开启仙途</span>
@@ -90,10 +90,6 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart, onLoad })
         </div>
       </div>
 
-      {/* Footer */}
-      <div className="absolute bottom-6 text-slate-400/80 text-xs font-serif tracking-widest drop-shadow-md">
-        VER 0.1.0 | PRE-ALPHA | 梦入神机
-      </div>
     </div>
   );
 };
