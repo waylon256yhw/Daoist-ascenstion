@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>问道长生 | Daoist Ascension</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@300;500;700;900&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'void': '#050a10',
+              'mystic': '#0f172a',
+              'jade': '#10b981',
+              'jade-light': '#6ee7b7',
+              'jade-dim': '#047857',
+              'spirit': '#06b6d4',
+              'amber-glow': '#f59e0b',
+              'paper': '#f8fafc', // Bright text color
+            },
+            fontFamily: {
+              'title': ['"Ma Shan Zheng"', 'cursive'],
+              'serif': ['"Noto Serif SC"', 'serif'],
+              'body': ['"ZCOOL XiaoWei"', 'serif'],
+            },
+            backgroundImage: {
+              // REPLACE THE URL BELOW WITH YOUR OWN IMAGE LINK
+              'ethereal-mountains': "url('https://pub-69c4594cd9ee46c681d99f41bd5bf29a.r2.dev/cloud-mt.jpg')",
+              'paper-texture': "url('https://www.transparenttextures.com/patterns/rice-paper-3.png')",
+            },
+            animation: {
+              'float': 'float 6s ease-in-out infinite',
+              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'ink-spread': 'inkSpread 1s ease-out forwards',
+              'drift': 'drift 20s linear infinite',
+              'shimmer': 'shimmer 3s linear infinite',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-10px)' },
+              },
+              inkSpread: {
+                '0%': { opacity: '0', transform: 'scale(0.95) translateY(10px)' },
+                '100%': { opacity: '1', transform: 'scale(1) translateY(0)' },
+              },
+              drift: {
+                '0%': { backgroundPosition: '0% 0%' },
+                '100%': { backgroundPosition: '100% 100%' },
+              },
+              shimmer: {
+                '0%': { backgroundPosition: '-200% center' },
+                '100%': { backgroundPosition: '200% center' },
+              }
+            }
+          },
+        },
+      }
+    </script>
+    <style>
+      body {
+        background-color: #0f172a;
+        color: #f8fafc; /* Lighter default text */
+      }
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: rgba(15, 23, 42, 0.1); 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(94, 234, 212, 0.4); 
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(94, 234, 212, 0.6); 
+      }
+      
+      .text-shadow-glow {
+        text-shadow: 0 0 15px rgba(20, 184, 166, 0.5), 0 0 30px rgba(0,0,0,0.8);
+      }
+
+      .text-shadow-sm {
+        text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+      }
+      
+      /* Glassmorphism - Lighter & More Organic */
+      .glass-panel {
+        background: rgba(10, 15, 30, 0.65); /* More transparent */
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+      }
+
+      /* Ink Input Style */
+      .input-ink {
+        background: transparent;
+        border: none;
+        border-bottom: 2px solid rgba(148, 163, 184, 0.5);
+        border-radius: 0;
+        padding: 0.5rem 0;
+        font-family: "Ma Shan Zheng", cursive;
+        font-size: 1.5rem;
+        color: #f1f5f9;
+        transition: all 0.3s ease;
+      }
+      .input-ink:focus {
+        outline: none;
+        border-bottom-color: #34d399; /* Jade-400 */
+        box-shadow: 0 4px 12px -2px rgba(52, 211, 153, 0.2);
+      }
+      .input-ink::placeholder {
+        color: rgba(148, 163, 184, 0.5);
+        font-family: "Noto Serif SC", serif;
+        font-size: 1rem;
+      }
+
+      /* Asymmetric Organic Shape */
+      .shape-organic {
+        border-radius: 24px 4px 24px 4px;
+      }
+      .shape-organic-reverse {
+        border-radius: 4px 24px 4px 24px;
+      }
+      
+      .mask-image-gradient {
+        mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
